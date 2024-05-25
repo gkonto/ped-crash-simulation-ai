@@ -10,7 +10,7 @@ import settings
 from convertibles import DataframeConvertible
 from crash_lexer import Lexer
 from crash_parser import Parser
-from utilities import GifExportable, GifModel, GifPoint, SimulationModel
+from utilities import GifModel, GifPoint, SimulationModel
 
 
 def create_folder(d: Path):
@@ -40,7 +40,8 @@ class DatasetReaderCSV(DatasetReader, DataframeConvertible):
     
     def read(self):
         self.dataset = pd.read_csv(self.filepath)
-    
+        self.dataset.rename(columns={'Unnamed: 0': 'Id'}, inplace=True)
+
     def convert_to_dataframe(self):
         return self.dataset
 

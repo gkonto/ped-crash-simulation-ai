@@ -4,7 +4,44 @@ from pathlib import Path
 
 import imageio
 import matplotlib.pyplot as plt
+from IPython.display import HTML, display
 from tqdm import tqdm
+
+
+def to_scrollable_table(df: "Dataframe"):
+    # Create a scrollable HTML table
+    scrollable_table_html = f"""
+    <style>
+        .scrollable-table {{
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }}
+        .scrollable-table table {{
+            border-collapse: collapse;
+            width: 100%;
+        }}
+        .scrollable-table th, .scrollable-table td {{
+            border: 1px solid lightgray;
+            padding: 8px;
+            text-align: left;
+        }}
+        .scrollable-table th {{
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background: gray;
+            color: white;
+            z-index: 10;
+        }}
+    </style>
+    <div class="scrollable-table">
+    {df.to_html(index=False)}
+    </div>
+    """
+
+    display(HTML(scrollable_table_html))
 
 
 class Responses:
@@ -230,3 +267,5 @@ class GifExportable(object):
         self.generateFrames(gif_model)
         self.createGif()
         # TODO remove frames created from generateFrames.
+
+
