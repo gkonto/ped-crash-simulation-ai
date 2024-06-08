@@ -1,4 +1,4 @@
-from dataset_reader import DatasetReader
+from src.dataset_reader import DatasetReader
 
 
 class DatasetPreprocessor(object):

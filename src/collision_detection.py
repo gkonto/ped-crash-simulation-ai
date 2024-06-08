@@ -4,7 +4,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from dataset_reader import DatasetReaderCSV
+from src.dataset_reader import DatasetReaderCSV
 
 
 def calculate_magnitude(accel_x, accel_y, accel_z, row):

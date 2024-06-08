@@ -1,6 +1,6 @@
 from enum import Enum
 
-from crash_lexer import Lexer
+from src.crash_lexer import Lexer
 from src.utilities import Responses, SimulationModel, Trajectory
 
 
