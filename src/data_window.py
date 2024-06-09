@@ -1,9 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
+import tensorflow as tf
 
 
 class DataWindow():
     def __init__(self, input_width, label_width, shift,
-                 train_df=train_df, val_df=val_df, test_df=test_df,
+                 train_df, val_df, test_df,
                  label_columns=None):
         self.train_df = train_df
         self.val_df = val_df
