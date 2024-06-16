@@ -7,11 +7,11 @@ from pprint import pprint
 import pandas as pd
 from tqdm import tqdm
 
-import src.settings as settings
-from src.convertibles import DataframeConvertible
-from src.crash_lexer import Lexer
-from src.crash_parser import Parser
-from src.utilities import GifModel, GifPoint, SimulationModel
+import settings as settings
+from convertibles import DataframeConvertible
+from crash_lexer import Lexer
+from crash_parser import Parser
+from utilities import GifModel, GifPoint, SimulationModel
 
 
 def create_folder(d: Path):

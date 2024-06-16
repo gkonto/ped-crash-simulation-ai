@@ -1,7 +1,7 @@
 from enum import Enum
 
-from src.crash_lexer import Lexer
-from src.utilities import Responses, SimulationModel, Trajectory
+from crash_lexer import Lexer
+from utilities import Responses, SimulationModel, Trajectory
 
 
 class Errors(object):

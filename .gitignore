@@ -125,3 +125,4 @@ celerybeat-schedule
 # User defined ignore values
 *no_timeseries.csv
 gifs/
+*.png

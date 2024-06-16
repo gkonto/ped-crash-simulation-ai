@@ -7,10 +7,22 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 
-def compile_and_fit(model, window, patience=3, max_epochs=50):
+def compile_and_fit(model, window, checkpoint_path, patience=3, max_epochs=50):
     early_stopping = EarlyStopping(monitor="val_loss", patience=patience, mode='min')
+    # Model checkpoint callback
+    model_checkpoint = ModelCheckpoint(
+        filepath=checkpoint_path,
+        save_weights_only=True,
+        monitor='val_loss',
+        mode='min',
+        save_best_only=True,
+        verbose=1
+    )
+    # Compile the model
     model.compile(loss=MeanSquaredError(), optimizer=Adam(), metrics=[MeanAbsoluteError()])
-    history = model.fit(window.train, epochs=max_epochs, validation_data=window.val, callbacks=[early_stopping])
+
+    # Fit the model with the callbacks
+    history = model.fit(window.train, epochs=max_epochs, validation_data=window.val, callbacks=[early_stopping, model_checkpoint])
     return history
 
 class AutoRegressive(Model):
@@ -22,27 +34,20 @@ class AutoRegressive(Model):
         self.lstm_rnn = RNN(self.lstm_cell, return_state=True)
         self.dense = Dense(train_df.shape[1])
 
-    # We’ll define the warmup function, which replicates a single-step LSTM model.
-    # We’ll simply pass the inputs into the lstm_rnn layer, get the prediction from the
-    # Dense layer, and return both the prediction and the state
     def warmup(self, inputs):
         x, *state = self.lstm_rnn(inputs)
         prediction = self.dense(x)
-
         return prediction, state
     
-
     def call(self, inputs, training=None):
         predictions = []
         prediction, state = self.warmup(inputs)
         predictions.append(prediction)
-
         for n in range(1, self.out_steps):
             x = prediction
             x, state = self.lstm_cell(x, states=state, training=training)
             prediction = self.dense(x)
             predictions.append(prediction)
-        
         predictions = tf.stack(predictions)
         predictions = tf.transpose(predictions, [1, 0, 2])
         return predictions
