@@ -105,9 +105,9 @@ class DatasetFromFiles(DatasetReader):
         print(f"Total read: {len(entries) + len(excluded)}")
         print(f"With error: {len(excluded)}")
         print(f"Valid entries in csv: {len(entries)}")
-        for entry, e in excluded:
-            for error in e.errors():
-                pprint(error)
+        # for entry, e in excluded:
+        #     for error in e.errors():
+        #         pprint(error)
 
         df = pd.DataFrame(entries)
         create_folder(self.output_path)

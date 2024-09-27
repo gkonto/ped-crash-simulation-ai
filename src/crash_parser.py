@@ -91,6 +91,11 @@ class Parser:
                     self.errors.add(f"{self.lexer.path}: Error while parsing: Missing values from {traj.name}")
             self.eat()
             i += 1
+        needed = set(self.timeseries_to_collect)
+        got = set([trajectory.name for trajectory in trajectories])
+        missing = needed - got
+        if missing:
+            self.errors.add(f"{self.lexer.path}: Missing requested timeseries {missing}")
 
         return trajectories
 
@@ -98,6 +103,7 @@ class Parser:
         type, velocity, translation, rot, pos = self.parse_features(self.lexer.path)
         responses = self.parse_responses(self.lexer.lines)
         trajectories = self.parse_trajectories(self.lexer.lines)
+
         entry = SimulationModel(self.lexer.path, type, velocity, translation, rot, pos, responses, trajectories)
         return entry, self.errors
 

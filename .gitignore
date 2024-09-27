@@ -126,3 +126,19 @@ celerybeat-schedule
 *no_timeseries.csv
 gifs/
 *.png
+
+# KAN related outputs
+*.pt
+video_img/
+figures/
+.venv/
+models/
+*.mp4
+*.yml
+*.csv
+*_state
+*.keras
+*.save
+*.pkl
+*.txt
+*_cache_data
